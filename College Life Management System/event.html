@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+	<title>Event Registration</title>
+	<style>
+		body{
+			font-family:Arial;
+			background-color:orange;
+		}
+		table{
+			border:solid;
+		}
+		th,td{
+			border:solid;
+			padding:5px;
+			text-align:center;
+		}
+		button{
+			margin-top:10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Event Registration</h1>
+	<table>
+		<tr>
+			<th>Event Name</th>
+			<th>Date</th>
+			<th>Action</th>
+		</tr>
+		<tr>
+			<td>Hack-The-Hackathon</td>
+			<td>20 February 2026</td>
+			<td><button onclick="registerEvent('Tech Fest')">Register</button></td>
+		</tr>
+		<tr>
+			<td>Basketball Championship</td>
+			<td>22 February 2026</td>
+			<td><button onclick="registerEvent('Sports Day')">Register</button></td>
+		</tr>
+		<tr>
+			<td>Break-Dancing</td>
+			<td>24 February 2026</td>
+			<td><button onclick="registerEvent('Cultural Fest')">Register</button></td>
+		</tr>
+	</table>
+	<h3>Registered</h3>
+	<ul id="regEvents"></ul>
+	<br>
+	<nav>
+		<a href="homepage.html">Back To Home</a><br>
+		<a href="calc.html">CGPA Calculator</a><br>
+       <a href="attendance.html">Attendance Calculator</a><br>
+	   <a href="info.html">Personal Info</a>
+	</nav>
+	<script>
+		function registerEvent(name){
+			let list=document.getElementById("regEvents");
+			let items=list.getElementsByTagName("li");
+			for(let i=0;i<items.length;i++){
+				if(items[i].innerText.startsWith(name)){
+					alert("Already Registered");
+					return;
+				}
+			}
+			let li = document.createElement("li");
+			li.innerText=name;
+			let but=document.createElement("button");
+			but.innerText="Remove";
+			but.onclick=function(){
+				list.removeChild(li);
+			};
+			li.appendChild(but);
+			list.appendChild(li);
+		}
+	</script>
+</body>
+<html>

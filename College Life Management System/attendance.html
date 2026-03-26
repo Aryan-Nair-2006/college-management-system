@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<head>
+	<title>ATTENDANCE</title>
+	<style>
+		body{
+			font-family:Arial;
+			background-color:orange;
+		}
+		table{
+			border:solid;
+		}
+		th,td{
+			border:solid;
+			padding:5px;
+			text-align:center;
+		}
+		button{
+			margin-top:10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Attendance Tracker</h1>
+	<table>
+		<tr>
+			<th>Subject</th>
+			<th>Present</th>
+			<th>Absent</th>
+			<th>Percentage</th>
+			<th>Graph</th>
+		</tr>
+		<tr>
+			<td>Maths</td>
+			<td><button onclick="mark('maths',true)">Present</button></td>
+			<td><button onclick="mark('maths',false)">Absent</button></td>
+			<td id="maths">0%</td>
+			<td><canvas id="canvas-maths" width="120" height="20"></canvas></td>
+		</tr>
+		<tr>
+			<td>Java</td>
+			<td><button onclick="mark('java',true)">Present</button></td>
+			<td><button onclick="mark('java',false)">Absent</button></td>
+			<td id="java">0%</td>
+			<td><canvas id="canvas-java" width="120" height="20"></canvas></td>
+		</tr>
+		<tr>
+			<td>Soft Skills</td>
+			<td><button onclick="mark('ss',true)">Present</button></td>
+			<td><button onclick="mark('ss',false)">Absent</button></td>
+			<td id="ss">0%</td>
+			<td><canvas id="canvas-ss" width="120" height="20"></canvas></td>
+		</tr>
+		<tr>
+			<td>NPTEL</td>
+			<td><button onclick="mark('nptel',true)">Present</button></td>
+			<td><button onclick="mark('nptel',false)">Absent</button></td>
+			<td id="nptel">0%</td>
+			<td><canvas id="canvas-nptel" width="120" height="20"></canvas></td>
+		</tr>
+		<tr>
+			<td>DSA</td>
+			<td><button onclick="mark('dsa', true)">Present</button></td>
+			<td><button onclick="mark('dsa', false)">Absent</button></td>
+			<td id="dsa">0%</td>
+			<td><canvas id="canvas-dsa" width="120" height="20"></canvas></td>
+		</tr>
+	</table>
+	<p id="result"></p>
+	<br>
+	<nav>
+		<a href="homepage.html">Back To Home</a><br>
+		<a href="event.html">Event Registration</a><br>
+		<a href="calc.html">CGPA Calculator</a><br>
+		<a href="info.html">Personal Info</a>
+	</nav>
+	<script>
+		let tot=0;
+		let present=0;
+		let attendance={
+			maths:{pres:0,total:0},
+			java:{pres:0,total:0},
+			ss:{pres:0,total:0},
+			nptel:{pres:0,total:0},
+			dsa: {pres:0,total:0}
+		};
+		function drawBar(subject, percent){
+			let canvas=document.getElementById("canvas-"+subject);
+			let ctx=canvas.getContext("2d");
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			ctx.fillStyle="lightgray";
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+			if(percent<75){
+				ctx.fillStyle="red";
+			}else{
+				ctx.fillStyle="green";
+			}
+			ctx.fillRect(0,0,(percent/100)*canvas.width,canvas.height);
+		}
+		function mark(subject, isPresent){
+			attendance[subject].total++;
+			tot++;
+			if(isPresent){
+				present++;
+				attendance[subject].pres++;
+			}	
+			let perc=(present/tot)*100;
+			let percent=(attendance[subject].pres/attendance[subject].total)*100;
+			document.getElementById(subject).innerText=percent+"%";
+			document.getElementById("result").innerHTML="Attendance Percentage: "+perc+"%";
+			drawBar(subject,percent);
+		}
+	</script>
+</body>
+</html>

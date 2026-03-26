@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grade Calculator</title>
+
+<style>
+body{
+  text-align:center;
+  font-family: Arial, sans-serif;
+  background-color:lightgreen;
+}
+
+h1{
+  margin-top:20px;
+}
+
+table{
+  margin:auto;
+  border-collapse: collapse;
+  background-color:skyblue;
+}
+
+th, td{
+  padding:10px 15px;
+  border:1px solid black;
+}
+
+input{
+  width:80px;
+  padding:5px;
+}
+
+button{
+  margin-top:20px;
+  padding:8px 15px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+#message{
+  margin-top:15px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1><u>Grade & CGPA Calculator</u></h1>
+
+<table>
+<tr>
+<th>Course</th>
+<th>Type</th>
+<th>Marks</th>
+<th>Grade / Point</th>
+</tr>
+
+<tr>
+<td>Mathematics</td>
+<td>Relative</td>
+<td><input id="m" type="number"></td>
+<td><p id="ms"></p></td>
+</tr>
+
+<tr>
+<td>Java</td>
+<td>Absolute</td>
+<td><input id="j" type="number"></td>
+<td><p id="ja"></p></td>
+</tr>
+
+<tr>
+<td>Data Structures</td>
+<td>Relative</td>
+<td><input id="d" type="number"></td>
+<td><p id="ds"></p></td>
+</tr>
+
+<tr>
+<td>Soft Skills</td>
+<td>Absolute</td>
+<td><input id="s" type="number"></td>
+<td><p id="ss"></p></td>
+</tr>
+
+<tr>
+<td>NPTEL</td>
+<td>Absolute</td>
+<td><input id="n" type="number"></td>
+<td><p id="ns"></p></td>
+</tr>
+
+</table>
+
+<button onclick="val()">Calculate</button>
+
+<p id="message"></p>
+<a href="info.html">Personal Info</a><br>
+<a href="attendance.html">Attendance Calculator</a><br>
+<a href="event.html">Event Registration</a><br>
+<a href="homepage.html">Back To Home</a>
+<script>
+
+function getGradeAbsolute(mark){
+  if (mark >= 90) return {grade:"S", point:10};
+  else if (mark >= 80) return {grade:"A", point:9};
+  else if (mark >= 70) return {grade:"B", point:8};
+  else if (mark >= 60) return {grade:"C", point:7};
+  else if (mark >= 55) return {grade:"D", point:6};
+  else if (mark >= 50) return {grade:"E", point:5};
+  else return {grade:"F", point:0};
+}
+
+function getGradeRelative(mark){
+  if (mark >= 100) return {grade:"S", point:10};
+  else if (mark >= 82) return {grade:"A", point:9};
+  else if (mark >= 64) return {grade:"B", point:8};
+  else if (mark >= 55) return {grade:"C", point:7};
+  else if (mark >= 46) return {grade:"D", point:6};
+  else if (mark > 0) return {grade:"E", point:5};
+  else return {grade:"F", point:0};
+}
+
+function val(){
+
+  var mat = Number(document.getElementById("m").value);
+  var jav = Number(document.getElementById("j").value);
+  var dsa = Number(document.getElementById("d").value);
+  var sft = Number(document.getElementById("s").value);
+  var npt = Number(document.getElementById("n").value);
+
+  if (isNaN(mat) || isNaN(jav) || isNaN(dsa) || isNaN(sft) || isNaN(npt)){
+    alert("All fields must be filled");
+    return;
+  }
+
+  if (mat<0 || mat>100 || jav<0 || jav>100 || dsa<0 || dsa>100 || sft<0 || sft>100 || npt<0 || npt>100){
+    alert("Marks must be between 0 and 100");
+    return;
+  }
+
+  var sum = mat + jav + dsa + sft + npt;
+  var average = sum / 5;
+  var gp = 0;
+
+  var g1 = getGradeRelative(mat);
+  ms.textContent = g1.grade + "/" + g1.point;
+  gp += g1.point;
+
+  var g2 = getGradeAbsolute(jav);
+  ja.textContent = g2.grade + "/" + g2.point;
+  gp += g2.point;
+
+  var g3 = getGradeRelative(dsa);
+  ds.textContent = g3.grade + "/" + g3.point;
+  gp += g3.point;
+
+  var g4 = getGradeAbsolute(sft);
+  ss.textContent = g4.grade + "/" + g4.point;
+  gp += g4.point;
+
+  var g5 = getGradeAbsolute(npt);
+  ns.textContent = g5.grade + "/" + g5.point;
+  gp += g5.point;
+
+  var cgpa = gp / 5;
+
+  document.getElementById("message").textContent =
+  "Average: " + average.toFixed(2) + " | CGPA: " + cgpa.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
