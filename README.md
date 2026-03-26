@@ -1,4 +1,4 @@
-College Life Management System
+# College Life Management System
 A college life management system with personal information, attendance tracking, event registration, and grade calculation using HTML, CSS, and JavaScript
 
 ## Features
